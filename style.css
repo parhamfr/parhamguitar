@@ -1,0 +1,127 @@
+
+/* ─────────────── پایه‌ها ─────────────── */
+body {
+    margin: 0;
+    padding: 0;
+    background: #0d0d0d;
+    color: #f2f2f2;
+    font-family: 'IRANSans', sans-serif;
+}
+
+h1, h2, h3 {
+    margin: 0 0 15px;
+}
+
+section {
+    padding: 60px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ─────────────── هدر ─────────────── */
+header {
+    background: #111;
+    padding: 40px 10px;
+    text-align: center;
+    border-bottom: 2px solid #2a2a2a;
+}
+
+header h1 {
+    font-size: 34px;
+    color: #ffd369;
+}
+
+header p {
+    color: #bdbdbd;
+    margin-top: 8px;
+}
+
+/* ─────────────── منو ─────────────── */
+nav {
+    margin-top: 25px;
+}
+
+nav a {
+    color: #e0e0e0;
+    text-decoration: none;
+    margin: 0 18px;
+    font-size: 17px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #ffd369;
+    border-bottom: 2px solid #ffd369;
+}
+
+/* ─────────────── معرفی ─────────────── */
+#about p {
+    line-height: 1.9;
+    color: #dcdcdc;
+}
+
+/* ─────────────── موسیقی ─────────────── */
+.music-card {
+    background: #1a1a1a;
+    padding: 25px;
+    margin: 20px 0;
+    border-radius: 15px;
+    border: 1px solid #2e2e2e;
+    transition: 0.3s;
+}
+
+.music-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(255, 211, 105, 0.15);
+}
+
+.music-card h3 {
+    color: #ffd369;
+}
+
+audio {
+    width: 100%;
+    margin-top: 12px;
+}
+
+/* ─────────────── گالری ─────────────── */
+.gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gallery img {
+    width: 260px;
+    margin: 12px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    transition: 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 211, 105, 0.2);
+}
+
+/* ─────────────── بخش تماس ─────────────── */
+#contact a {
+    color: #ffd369;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#contact a:hover {
+    text-shadow: 0 0 10px #ffd369;
+}
+
+/* ─────────────── فوتر ─────────────── */
+footer {
+    background: #111;
+    padding: 25px;
+    text-align: center;
+    border-top: 2px solid #2a2a2a;
+    margin-top: 70px;
+    color: #888;
+}
