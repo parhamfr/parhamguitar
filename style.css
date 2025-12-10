@@ -221,3 +221,28 @@ footer {
     background: #ffdf84;
     box-shadow: 0 0 12px rgba(255, 211, 105, 0.5);
 }
+#video video {
+    aspect-ratio: 9 / 16;  /* نسبت تصویر ریلز */
+    height: auto;
+    width: 100%;
+    max-width: 300px;      /* اندازه واقعی مثل ریلز */
+    object-fit: cover;     /* قاب دقیقا مثل اینستا */
+    border-radius: 14px;
+}
+.download-music {
+    display: inline-block;
+    margin-top: 12px;
+    background: #ffd369;
+    color: #000;
+    padding: 8px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    width: max-content;
+    transition: 0.3s ease;
+}
+
+.download-music:hover {
+    background: #ffdf84;
+    box-shadow: 0 0 12px rgba(255, 211, 105, 0.5);
+}
