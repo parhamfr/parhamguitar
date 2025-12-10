@@ -229,6 +229,7 @@ footer {
     object-fit: cover;     /* قاب دقیقا مثل اینستا */
     border-radius: 14px;
 }
+/* کیلید های دانلود موزیک */
 .download-music {
     display: inline-block;
     margin-top: 12px;
@@ -245,4 +246,48 @@ footer {
 .download-music:hover {
     background: #ffdf84;
     box-shadow: 0 0 12px rgba(255, 211, 105, 0.5);
+}
+#contact {
+    padding: 30px 20px;
+    text-align: right;
+}
+
+#contact h2 {
+    color: #fff;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-item {
+    display: block;
+    background: #222;
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.contact-item:hover {
+    background: #444;
+}
+
+
+/* --------- موبایل (خیلی مهم) --------- */
+@media (max-width: 600px) {
+    #contact h2 {
+        font-size: 22px;
+    }
+
+    .contact-item {
+        font-size: 16px;
+        padding: 12px 15px;
+    }
 }
