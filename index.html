@@ -12,6 +12,10 @@
 </head>
 
 <body>
+    <!-- Canvas for floating musical-note particles (subtle animated background) -->
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+    <!-- پارالاکس لایهٔ پس‌زمینه (ملایم) -->
+    <div id="parallax-layer" aria-hidden="true"></div>
 
     <!-- هدر سایت -->
     <header>
@@ -80,36 +84,37 @@
         <h2>ویدیوها</h2>
         <div class="video">
             <div class="video-box">
-                <video controls src="./Chezile Beanie.mp4">مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                <div class="video-frame">
+                    <video controls src="./Chezile Beanie.mp4">مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                    <div class="video-caption" aria-hidden="true">Chezile Beanie</div>
+                </div>
                 <a class="download-btn" href="./Chezile Beanie.mp4" download> دانلود ویدیو</a>
             </div>
             <div class="video-box">
-                <video src="./Nameh.mp4" controls>مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                <div class="video-frame">
+                    <video src="./Nameh.mp4" controls>مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                    <div class="video-caption" aria-hidden="true">نامه</div>
+                </div>
                 <a class="download-btn" href="./Nameh.mp4" download> دانلود ویدیو</a>
             </div>
             <div class="video-box">
-                <video src="./Raft hame roozaye khoob.mp4" controls>مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                <div class="video-frame">
+                    <video src="./Raft hame roozaye khoob.mp4" controls>مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                    <div class="video-caption" aria-hidden="true">رفت همه روزای خوب</div>
+                </div>
                 <a class="download-btn" href="./Raft hame roozaye khoob.mp4" download> دانلود ویدیو</a>
             </div>
             <div class="video-box">
-                <video controls src="./Sangeh Saboor .mp4">مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                <div class="video-frame">
+                    <video controls src="./Sangeh Saboor .mp4">مرور گر شما از ویدیو پشتیبانی نمی کند</video>
+                    <div class="video-caption" aria-hidden="true">سنگ صبور</div>
+                </div>
                 <a class="download-btn" href="./Sangeh Saboor .mp4" download> دانلود ویدیو</a>
             </div>
         </div>
 
     </section> 
-     <!-- بخش دایره پس زمینه -->
-     <section class="gaze">
-            <div class="eye e1">
-                <div class="iris"></div>
-            </div>
-            <div class="eye e2">
-                <div class="iris"></div>
-            </div>
-            <div class="eye e3">
-                <div class="iris"></div>
-            
-        </section>
+
     <!-- بخش تماس -->
     <section id="contact">
         <h2> ارتباطات </h2>
@@ -149,6 +154,111 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+
+    <!-- Particle script: lightweight musical-note particles; respects prefers-reduced-motion -->
+    <script>
+    (function(){
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return; // skip heavy animation when user prefers reduced motion
+
+        const canvas = document.getElementById('particles-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let w = 0, h = 0, dpr = window.devicePixelRatio || 1;
+
+        function resize(){
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            canvas.width = Math.round(w * dpr);
+            canvas.height = Math.round(h * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const glyphs = ['♪','♫','🎵','🎶'];
+        const colors = ['rgba(255,215,105,0.98)','rgba(255,160,100,0.9)','rgba(100,220,200,0.88)'];
+        const particles = [];
+        /* افزایش اندک چگالی و پخش برای جلوهٔ پُرشده‌تر اما سبک */
+        const max = Math.min(60, Math.floor((w*h) / 15000));
+
+        function spawn(){
+            const size = Math.random() * 14 + 8;
+            /* y در محدودهٔ 25% تا 75% ارتفاع صفحه تولید می‌شود (بالاتر از پایین صفحه) */
+            const startY = Math.random() * (h * 0.5) + (h * 0.25);
+            particles.push({
+                x: Math.random() * w,
+                y: startY,
+                /* سرعت عمودی کمی آرام‌تر تا حرکت نرم‌تر شود */
+                vy: - (Math.random() * 0.45 + 0.35),
+                /* پخش افقی بیشتر */
+                vx: (Math.random() - 0.5) * 0.6,
+                size: size,
+                char: glyphs[Math.floor(Math.random() * glyphs.length)],
+                color: colors[Math.floor(Math.random() * colors.length)],
+                alpha: Math.random() * 0.5 + 0.25,
+                sway: Math.random() * 1.0
+            });
+        }
+
+        for (let i=0;i<max;i++) spawn();
+
+        function step(){
+            ctx.clearRect(0,0,w,h);
+            ctx.save();
+            ctx.globalCompositeOperation = 'lighter';
+            for (let i = 0; i < particles.length; i++){
+                const p = particles[i];
+                p.x += p.vx + Math.sin(Date.now()*0.0008 + i) * 0.4;
+                p.y += p.vy;
+                        ctx.globalAlpha = p.alpha * 0.94;
+                ctx.font = `${p.size}px serif`;
+                ctx.fillStyle = p.color || 'rgba(255,215,105,0.95)';
+                ctx.fillText(p.char, p.x, p.y);
+
+                if (p.y < -50 || p.x < -60 || p.x > w + 60) {
+                    /* بازتولید ذره با y بالاتر (نه از خیلی پایین) و پراکنش افقی بیشتر */
+                    particles[i] = {
+                        x: Math.random() * w,
+                        y: Math.random() * (h * 0.5) + (h * 0.25),
+                        vy: - (Math.random() * 0.45 + 0.35),
+                        vx: (Math.random() - 0.5) * 0.6,
+                        size: p.size,
+                        char: p.char,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        alpha: p.alpha,
+                        sway: Math.random() * 1.0
+                    };
+                }
+            }
+            ctx.restore();
+            requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    })();
+    </script>
+
+    <!-- Parallax scroll small script (desktop only, respects reduced motion) -->
+    <script>
+    (function(){
+        const par = document.getElementById('parallax-layer');
+        if (!par) return;
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return;
+        if (window.innerWidth < 900) return; // skip on small screens
+
+        let latestY = 0, ticking=false;
+        function onScroll(){ latestY = window.scrollY; if(!ticking){ requestAnimationFrame(update); ticking=true; } }
+        function update(){
+            const y = Math.round(latestY * 0.06);
+            par.style.transform = `translateY(${y}px)`;
+            ticking = false;
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+    })();
+    </script>
 </body>
 
 </html>

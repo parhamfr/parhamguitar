@@ -13,6 +13,89 @@ body {
     font-family: 'IRANSans', sans-serif;
 }
 
+/* متغیرهای رنگ برای متن ویدیو (برای هماهنگی با بخش‌های دیگر) */
+:root {
+    --video-text-color: #ffffff;
+    --video-text-glow: 0 0 6px rgba(255,211,105,0.6), 0 0 14px rgba(255,140,0,0.28);
+}
+
+
+/* پس‌زمینهٔ سینمایی: گرادیانت متحرک + وینتج و نویز */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -4; /* move further back so parallax layer can sit above */
+    background: linear-gradient(120deg, #071022 0%, #151225 40%, #2b1608 70%, #0b0b0b 100%);
+    background-size: 300% 300%;
+    animation: gradientShift 20s ease-in-out infinite;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    /* وینتج ملایم + scanlines + الگوی نویز ریز */
+    background-image:
+        linear-gradient(rgba(255,255,255,0.018) 0 1px, transparent 1px 3px),
+        radial-gradient(ellipse at center, rgba(255,215,105,0.03) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.85) 100%),
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.009) 0 1px, transparent 1px 4px);
+    background-size: auto, cover, 6px 6px;
+    mix-blend-mode: overlay;
+    opacity: 0.95;
+    pointer-events: none;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+} 
+
+/* Parallax soft blur layer */
+#parallax-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -3; /* between base gradient and film overlay */
+    background: radial-gradient(circle at 10% 20%, rgba(255,160,120,0.08) 0%, transparent 12%),
+                radial-gradient(circle at 80% 80%, rgba(100,220,200,0.06) 0%, transparent 14%);
+    filter: blur(26px) saturate(130%);
+    opacity: 0.26;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* Canvas particles: fills viewport and sits above background */
+#particles-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1; /* above background layers, under UI */
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 0.95;
+}
+
+/* Neon glow for video captions */
+.video-caption {
+    text-shadow: 0 0 6px rgba(255,211,105,0.8), 0 0 18px rgba(255,140,0,0.35);
+    animation: captionGlow 3.5s ease-in-out infinite;
+}
+@keyframes captionGlow {
+    0% { text-shadow: 0 0 6px rgba(255,211,105,0.6); }
+    50% { text-shadow: 0 0 20px rgba(255,211,105,0.98); }
+    100% { text-shadow: 0 0 6px rgba(255,211,105,0.6); }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .video-caption { animation: none; }
+    #particles-canvas { display: none; }
+    #parallax-layer { display: none; }
+}
+
 /* فاصلهٔ پایین برای تیترها */
 h1, h2, h3 {
     margin-bottom: 15px;
@@ -140,13 +223,25 @@ audio {
     box-shadow: 0 0 20px rgba(255, 211, 105, 0.2);
 }
 
+/* هماهنگ‌سازی رنگ متن گالری با متن کپشن ویدیو */
+#gallery h2,
+#gallery p,
+.gallery figcaption {
+    color: #ffd369;
+    text-shadow: var(--video-text-glow);
+    font-weight: 700;
+}
+
+/* اگر خواستید فقط عنوان گالری طلایی شود (مثل عنوان ویدیو) از کلاس زیر استفاده کنید */
+/* #gallery h2 { color: #ffd369; text-shadow: 0 0 10px rgba(255, 211, 105, 0.25); } */
+
 
 /* ───────────────────────
    🔥 بخش تماس
 ──────────────────────── */
 /* لینک‌های بخش تماس: رنگ طلایی و بولد */
 #contact a {
-    color: #ffd369;
+        color: #ffd369;
     text-decoration: none;
     font-weight: bold;
 }
@@ -202,6 +297,52 @@ footer {
     gap: 12px;
     align-items: center;
 } 
+
+/* قاب ویدیو برای overlay کپشن */
+.video-frame {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+/* کپشن جدید: فقط نام ویدیو و قرارگیری در بالا-چپ به صورت pill */
+.video-caption {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: auto;
+    bottom: auto;
+    padding: 6px 12px;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    text-align: left;
+    font-weight: 700;
+    pointer-events: none;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 18px rgba(255,211,105,0.08);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    display: inline-block;
+}
+
+/* کوچک کردن فونت برای موبایل و مرکز کردن بالای ویدیو */
+@media (max-width: 600px) {
+    .video-caption {
+        left: 50%;
+        transform: translateX(-50%);
+        top: 8px;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+/* hover effect on desktop: slight lift */
+@media (hover: hover) and (pointer: fine) {
+    .video-frame:hover .video-caption { transform: translateX(-1px) translateY(-2px) scale(1.02); box-shadow: 0 10px 26px rgba(0,0,0,0.5); }
+}
+
+/* ensure caption blend mode normal */
+.video-caption { mix-blend-mode: normal; }
 
 /* ویدیو داخل کارت: پر شدن عرض، گوشهٔ گرد و سایه ملایم */
 /* استایل ویدیو */
@@ -277,7 +418,8 @@ footer {
 
 /* عنوان بخش تماس: رنگ و اندازه */
 #contact h2 {
-    color: #fff;
+    color: #ffd369; /* رنگ طلایی مشابه عنوان ویدیویی */
+    text-shadow: 0 0 10px rgba(255, 211, 105, 0.25);
     font-size: 26px;
     margin-bottom: 20px;
 }
@@ -344,48 +486,5 @@ footer {
     .download-btn {
         align-self: center;
         padding: 8px 16px;
-    }
-}
-/* دایره‌های پس‌زمینه (چشم‌ها): اندازه، حاشیه و انیمیشن شناور */
-.eye {
-    width: 120px;
-    height: 120px;
-    border: 2px solid rgba(180, 150, 100, 0.4);
-    border-radius: 50%;
-    position: absolute;
-    animation: subtle-float 6s infinite ease-in-out;
-}
-/* عنبیه داخل هر چشم: اندازه، رنگ و درخشش */
-.eye .iris {
-    width: 40px;
-    height: 40px;
-    margin: 40px auto;
-    border-radius: 50%;
-    background: rgba(200, 170, 120, 0.6);
-    box-shadow: 0 0 20px rgba(200, 170, 120, 0.6);
-}
-/* موقعیت‌دهی چشم‌ها در پس‌زمینه (مقادیر چپ و بالا) */
-.e1 {
-    left: 10%;
-    top: 90%;
-}
-.e2 {
-    left: 45%;
-    top: 40%;
-}
-.e3 {
-    left: 30%;
-    top: 450%;
-} 
-/* انیمیشن شناور ملایم برای چشم‌ها (بالا و پایین رفتن) */
-@keyframes subtle-float {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-20px);
-    }
-    100% {
-        transform: translateY(0);
     }
 }
