@@ -1,4 +1,4 @@
-.<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -18,17 +18,19 @@
     <div id="parallax-layer" aria-hidden="true"></div>
 
     <!-- هدر سایت -->
-    <header>
-        <h1>پرهام فرخاری</h1>
-        <p>نوازنده گیتار | آهنگساز | تنظیم کننده </p>
+    <header class="site-hero" role="banner" aria-label="هدر سایت پرهام فرخاری">
+        <div class="hero-inner">
+            <h1>پرهام فرخاری</h1>
 
-        <nav>
-            <a href="#about">معرفی</a>
-            <a href="#music">موسیقی</a>
-            <a href="#gallery">گالری</a>
-            <a href="#video">ویدیو</a>
-            <a href="#contact">ارتباطات</a>
-        </nav>
+            <nav class="hero-nav" aria-label="منو اصلی">
+                <a href="#about">معرفی</a>
+                <a href="#music">موسیقی</a>
+                <a href="#gallery">گالری</a>
+                <a href="#video">ویدیو</a>
+                <a href="#contact">ارتباطات</a>
+            </nav>
+        </div>
+        <div class="hero-accent" aria-hidden="true"></div>
     </header>
 
     <!-- بخش معرفی -->
@@ -47,7 +49,7 @@
 
         <div class="music-card">
             <h3> shape of my heart</h3>
-            <audio controls>your-music-1
+            <audio controls>
                 <source src="./shape of My Heart .mp3" type="audio/mpeg">
             </audio> 
             <a class="download-music" href="./shape of My Heart .mp3" download> دانلود موزیک</a>
@@ -152,8 +154,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 
     <!-- Particle script: lightweight musical-note particles; respects prefers-reduced-motion -->
     <script>
