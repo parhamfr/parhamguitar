@@ -231,8 +231,8 @@ audio {
 /* گالری تصاویر: چینش فلکس و اجازه به شکست سطر */
 .gallery {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow: scroll;
 }
 
 /* استایل تصاویر گالری: اندازه ثابت، حاشیه و گوشه‌های گرد */
@@ -249,9 +249,9 @@ audio {
     transform: scale(1.05);
     box-shadow: 0 0 20px rgba(255, 211, 105, 0.2);
 }
-.video-.video-box{
-    transform: scale(5);
-    box-shadow: 0 0 20px rgba(255, 211, 105, 0.2);
+.video video:hover{
+    transform: scale(1.05);
+    box-shadow: 10px 10px 20px rgba(255, 211, 105, 0.2);
 }
 
 /* هماهنگ‌سازی رنگ متن گالری با متن کپشن ویدیو */
@@ -312,15 +312,18 @@ footer {
     margin-bottom: 30px;
     letter-spacing: 1px;
     color: #ffffff;
+    
 }
 
 /* کانتینر گرید ویدیوها: باعث می‌شود کارت‌ها به صورت ستون‌ها نمایش داده شوند */
 /* گرید */
 #video .video {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    display:flex ;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 400px;
     padding: 10px;
+    align-items: center;
+    overflow:scroll;
 } 
 
 /* کارت ویدیو: قرارگیری ویدیو و دکمه به صورت عمودی و فاصلهٔ بین آن‌ها */
@@ -329,14 +332,14 @@ footer {
     display: flex;
     flex-direction: column;
     text-align: right;
-    gap: 12px;
-    align-items: center;
-} 
+    gap: 19px;
+    align-items: start;
+}
 
 /* قاب ویدیو برای overlay کپشن */
 .video-frame {
     position: relative;
-    width: 100%;
+    width: 400%;
     overflow: hidden;
     border-radius: 14px;
 }
