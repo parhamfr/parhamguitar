@@ -334,8 +334,9 @@ footer {
     flex-direction: column;
     text-align:center;
     gap: 19px;
-    align-items: start;
+    align-items: center;
 }
+
 
 /* قاب ویدیو برای overlay کپشن */
 .video-frame {
@@ -349,8 +350,8 @@ footer {
 .video-caption {
     position: absolute;
     top: 12px;
-    left: 12px;
-    right: auto;
+    left: auto;
+    right: 12px;
     bottom: auto;
     padding: 6px 12px;
     background: rgba(0,0,0,0.5);
@@ -366,8 +367,13 @@ footer {
     animation: captionGlow 3.5s ease-in-out infinite;
     mix-blend-mode: normal;
 }
+.video1{
+    margin-right: 120px;
+}
 
-
+.video2{
+    margin-left: 120px;
+}
 
 
 /* ویدیو داخل کارت: ترکیب تنظیمات نمایش و نسبت تصویر */
@@ -417,6 +423,7 @@ footer {
     font-weight: bold;
     width: max-content;
     transition: 0.3s ease;
+    text-align: center;
 }
 
 /* افکت هاور دکمه دانلود موزیک */
@@ -438,18 +445,20 @@ footer {
     margin-bottom: 20px;
 }
 
+
 /* --------- موبایل (خیلی مهم) --------- */
 @media (max-width: 600px) {
     /* اندازه عنوان بخش تماس در موبایل */
     #contact h2 {
         font-size: 22px;
     }
-
+    .download-btn{
+        text-align: center;
+    }
 
     /* کارت ویدیو در موبایل: کشش کامل و ترازبندی مناسب */
     .video-box {
-        align-items: stretch;
-        text-align: right;
+        align-items: center;
         gap:12px;
     }
 
@@ -461,11 +470,6 @@ footer {
         aspect-ratio: 9/16;
     }
 
-    /* دکمه دانلود در موبایل: اندازهٔ مناسب و مرکزشده */
-    .download-btn {
-        align-self: center;
-        padding: 8px 16px;
-    }
 
     /* آیکون‌های تماس: رنگ ملایم‌تر و ترنزیشن آرام‌تر در موبایل */
     #contact span svg {
